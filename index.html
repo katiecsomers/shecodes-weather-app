@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="preconnect"
+			href="https://fonts.googleapis.com"
+		/>
+		<link
+			rel="preconnect"
+			href="https://fonts.gstatic.com"
+			crossorigin
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Comforter+Brush&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+			rel="stylesheet"
+		/>
+
+		<link
+			rel="stylesheet"
+			href="styles.css"
+		/>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<title>Weather App</title>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-3 today">
+					<div class="top-fade">Today in...</div>
+					<h1 id="city-title"></h1>
+					<p class="time">Tuesday 16:00</p>
+					<p>
+						<span id="today-temps"></span>
+						C
+					</p>
+				</div>
+				<div class="col-3 current-icon">
+					<img
+						src="suncloud.png"
+						alt="sunny cloud"
+						height="150px"
+					/>
+				</div>
+				<div class="col-3 today-details">
+					<ul>
+						<li id="descriptor">Clear</li>
+						<li>Wind: <span id="wind"> </span>km/h</li>
+						<li>Humidity: <span id="humidity"></span>%</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row future-days">
+				<div class="col tomorrow future">
+					<h1>Tomorrow</h1>
+					<p>
+						10°/<span class="higher">16°</span><br />
+						<span class="symbol">🌦</span>
+					</p>
+				</div>
+				<div class="col friday future">
+					<h1>Friday</h1>
+					<p>
+						15°/<span class="higher">18°</span><br />
+						<span class="symbol">🌧</span>
+					</p>
+				</div>
+				<div class="col saturday future">
+					<h1>Saturday</h1>
+					<p>
+						16°/<span class="higher">20°</span><br />
+						<span class="symbol">🌤</span>
+					</p>
+				</div>
+				<div class="col sunday future">
+					<h1>Sunday</h1>
+					<p>
+						18°/<span class="higher">21°</span><br />
+						<span class="symbol">☀️</span>
+					</p>
+				</div>
+				<div class="col monday future">
+					<h1>Monday</h1>
+					<p>
+						17°/<span class="higher">22°</span><br />
+						<span class="symbol">☀️</span>
+					</p>
+				</div>
+			</div>
+
+			<form class="search-form">
+				<div class="input-group">
+					<input
+						type="text"
+						class="form-control"
+						placeholder="Search for a city"
+						id="searched-city"
+					/>
+					<button
+						class="btn btn-outline-secondary"
+						id="search-city-button"
+						type="submit"
+					>
+						Search
+					</button>
+					<button
+						class="btn btn-outline-secondary current-location-button"
+						type="button"
+					>
+						Current
+					</button>
+				</div>
+			</form>
+		</div>
+		<script src="index.js"></script>
+	</body>
+</html>
