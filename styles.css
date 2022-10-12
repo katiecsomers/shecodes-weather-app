@@ -1,6 +1,9 @@
 form {
 	margin-bottom: 10px;
 }
+footer {
+	text-align: center;
+}
 .container {
 	border: 2px solid rgba(0, 0, 0, 0.2);
 	max-width: 60%;
