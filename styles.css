@@ -40,13 +40,15 @@ footer {
 	margin-top: 30px;
 	margin-left: 0;
 	font-size: 14px;
+	text-transform: capitalize;
 }
-.current-icon {
+#current-icon-wrapper {
 	display: inline;
-	height: auto;
-	margin: 0;
+	height: 150px;
+	position: relative;
+	left: -30px;
+	top: 10px;
 }
-
 .future,
 .today {
 	text-align: center;

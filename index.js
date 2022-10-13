@@ -34,6 +34,7 @@ function retrieveWeather(city) {
 }
 
 function showTemp(position) {
+	console.log(position);
 	let city = position.data.name;
 	let cityTitle = document.querySelector("#city-title");
 	cityTitle.innerHTML = `${city}`;
@@ -44,7 +45,7 @@ function showTemp(position) {
 	todayTemps.innerHTML = `${loTemp}°|${hiTemp}°`;
 
 	let descriptor = document.querySelector("#descriptor");
-	let appDescription = position.data.weather[0].main;
+	let appDescription = position.data.weather[0].description;
 	descriptor.innerHTML = `${appDescription}`;
 
 	let wind = document.querySelector("#wind");
@@ -54,6 +55,13 @@ function showTemp(position) {
 	let humidity = document.querySelector("#humidity");
 	let humidityValue = position.data.main.humidity;
 	humidity.innerHTML = `${humidityValue}`;
+
+	let icon = document.querySelector("#current-icon");
+	let iconValue = position.data.weather[0].icon;
+	icon.setAttribute(
+		"src",
+		`http://openweathermap.org/img/wn/${iconValue}@2x.png`
+	);
 }
 
 function retrievePosition(event) {
