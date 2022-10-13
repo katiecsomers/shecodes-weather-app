@@ -62,6 +62,9 @@ function showTemp(position) {
 		"src",
 		`http://openweathermap.org/img/wn/${iconValue}@2x.png`
 	);
+	let dateDisplay = document.querySelector(".time");
+	let date = new Date(position.data.dt * 1000);
+	dateDisplay.innerHTML = currentTime(date);
 }
 
 function retrievePosition(event) {
@@ -78,12 +81,7 @@ function feedbackPostion(location) {
 	axios.get(positionUrl).then(showTemp);
 }
 
-let time = document.querySelector(".time");
-let now = new Date();
-time.innerHTML = currentTime(now);
-
 let searchCityForm = document.querySelector("#search-city-button");
-
 searchCityForm.addEventListener("click", handleSubmit);
 
 let currentLocationButton = document.querySelector(".current-location-button");
