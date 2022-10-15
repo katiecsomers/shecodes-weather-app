@@ -20,21 +20,21 @@ footer {
 	box-shadow: -1px 1px 1px 1px grey;
 }
 
-.top-fade,
-.time {
+.faded {
 	font-size: small;
 	font-style: italic;
 	color: rgba(0, 0, 0, 0.3);
+	transition: none;
 }
 .today h1 {
 	font-size: 30px;
 }
 
-.celcius-temp,
-.farenheit-temp {
+#today-temps {
 	text-decoration: none;
 	color: black;
 	font-family: "Raleway", sans-serif;
+	font-size: 30px;
 }
 .today-details {
 	margin-top: 30px;
@@ -54,6 +54,16 @@ footer {
 	text-align: center;
 }
 
+.farenheit-link,
+.celcius-link {
+	position: relative;
+	top: -5px;
+	left: 2px;
+	text-decoration: none;
+}
+.inactive {
+	color: black;
+}
 .future h1 {
 	font-size: 20px;
 }

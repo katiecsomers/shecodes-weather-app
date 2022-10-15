@@ -34,15 +34,16 @@ function retrieveWeather(city) {
 }
 
 function showTemp(position) {
-	console.log(position);
 	let city = position.data.name;
 	let cityTitle = document.querySelector("#city-title");
 	cityTitle.innerHTML = `${city}`;
 
-	let hiTemp = Math.round(position.data.main.temp_max);
-	let loTemp = Math.round(position.data.main.temp_min);
+	hiCelciusTemp = position.data.main.temp_max;
+	loCelciusTemp = position.data.main.temp_min;
+	let loTemp = Math.round(loCelciusTemp);
+	let hiTemp = Math.round(hiCelciusTemp);
 	let todayTemps = document.querySelector("#today-temps");
-	todayTemps.innerHTML = `${loTemp}°|${hiTemp}°`;
+	todayTemps.innerHTML = `${loTemp}/${hiTemp}`;
 
 	let descriptor = document.querySelector("#descriptor");
 	let appDescription = position.data.weather[0].description;
@@ -81,10 +82,38 @@ function feedbackPostion(location) {
 	axios.get(positionUrl).then(showTemp);
 }
 
+function updateFarenheit(event) {
+	event.preventDefault();
+	let todayTemps = document.querySelector("#today-temps");
+	todayTemps.innerHTML = `${Math.round(loCelciusTemp * 1.8 + 32)}/${Math.round(
+		hiCelciusTemp * 1.8 + 32
+	)}`;
+	celciusLink.classList.remove("inactive");
+	farenheitLink.classList.add("inactive");
+}
+
+function updateCelcius(event) {
+	event.preventDefault();
+	let todayTemps = document.querySelector("#today-temps");
+	todayTemps.innerHTML = `${Math.round(loCelciusTemp)}/${Math.round(
+		hiCelciusTemp
+	)}`;
+	celciusLink.classList.add("inactive");
+	farenheitLink.classList.remove("inactive");
+}
 let searchCityForm = document.querySelector("#search-city-button");
 searchCityForm.addEventListener("click", handleSubmit);
 
 let currentLocationButton = document.querySelector(".current-location-button");
 currentLocationButton.addEventListener("click", retrievePosition);
 
-retrieveWeather("Tokyo");
+let farenheitLink = document.querySelector(".farenheit-link");
+farenheitLink.addEventListener("click", updateFarenheit);
+
+let celciusLink = document.querySelector(".celcius-link");
+celciusLink.addEventListener("click", updateCelcius);
+
+let loCelciusTemp = null;
+let hiCelciusTemp = null;
+
+retrieveWeather("Kyoto");
