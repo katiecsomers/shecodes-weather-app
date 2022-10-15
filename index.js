@@ -66,6 +66,8 @@ function showTemp(position) {
 	let dateDisplay = document.querySelector(".time");
 	let date = new Date(position.data.dt * 1000);
 	dateDisplay.innerHTML = currentTime(date);
+
+	retrieveCoordinates(position.data.coord);
 }
 
 function retrievePosition(event) {
@@ -101,6 +103,54 @@ function updateCelcius(event) {
 	celciusLink.classList.add("inactive");
 	farenheitLink.classList.remove("inactive");
 }
+
+function retrieveCoordinates(event) {
+	let lat = event.lat;
+	let lon = event.lon;
+	let apiKey = "a43564c91a6c605aeb564c9ed02e3858";
+	let units = "metric";
+	let positionUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=${units}&exclude=hourly,minutely&appid=${apiKey}`;
+
+	axios.get(positionUrl).then(displayForecast);
+}
+
+function formatDay(timestamp) {
+	let day = new Date(timestamp * 1000);
+	let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+	return days[day.getDay()];
+}
+
+function displayForecast(event) {
+	console.log(event);
+	let forecast = event.data.daily;
+	let forecastElement = document.querySelector(".forecast");
+	let forecastHTML = `<div class="row">`;
+
+	forecast.forEach(function (dayForecast, index) {
+		if (index < 5) {
+			forecastHTML =
+				forecastHTML +
+				`
+	<div class="col">
+		<h1>${formatDay(dayForecast.dt)}</h1>
+		<p>
+			<span>${Math.round(
+				dayForecast.temp.min
+			)}</span>/<span class="higher">${Math.round(dayForecast.temp.max)}°</span>
+			<br />
+			<span class="symbol"><img src="http://openweathermap.org/img/wn/${
+				dayForecast.weather[0].icon
+			}@2x.png" alt="weather icon"/>
+			</span>
+		</p>
+	</div>
+`;
+		}
+	});
+	forecastHTML = forecastHTML + `</div>`;
+	forecastElement.innerHTML = forecastHTML;
+}
+
 let searchCityForm = document.querySelector("#search-city-button");
 searchCityForm.addEventListener("click", handleSubmit);
 
@@ -109,7 +159,6 @@ currentLocationButton.addEventListener("click", retrievePosition);
 
 let farenheitLink = document.querySelector(".farenheit-link");
 farenheitLink.addEventListener("click", updateFarenheit);
-
 let celciusLink = document.querySelector(".celcius-link");
 celciusLink.addEventListener("click", updateCelcius);
 
