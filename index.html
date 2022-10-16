@@ -49,7 +49,7 @@
 						<span id="today-temps">null</span>
 						<a
 							href="#"
-							class="celcius-link inactive"
+							class="celsius-link inactive"
 							>°C | </a
 						><a
 							href="#"
@@ -71,7 +71,7 @@
 				<div class="col-3 today-details">
 					<ul>
 						<li id="descriptor">Clear</li>
-						<li>Wind: <span id="wind"> </span>km/h</li>
+						<li>Wind: <span id="wind"> </span></li>
 						<li>Humidity: <span id="humidity"></span>%</li>
 					</ul>
 				</div>
@@ -79,7 +79,10 @@
 
 			<div class="row forecast"></div>
 
-			<form class="search-form">
+			<form
+				class="search-form"
+				autocomplete="off"
+			>
 				<div class="input-group">
 					<input
 						type="text"

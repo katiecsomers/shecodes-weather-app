@@ -22,26 +22,27 @@ function currentTime(date) {
 }
 function handleSubmit(event) {
 	event.preventDefault();
-	let city = document.querySelector("#searched-city").value;
-	retrieveWeather(city);
+	cityInputElement = document.querySelector("#searched-city").value;
+	retrieveWeather(cityInputElement);
+	form = document.querySelector(".search-form");
+	form.reset();
 }
 
 function retrieveWeather(city) {
-	let apiKey = "504de5c3d6be01debd4067f4eb861fb3";
-	let units = "metric";
 	let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${units}&appid=${apiKey}`;
 	axios.get(url).then(showTemp);
 }
 
 function showTemp(position) {
-	let city = position.data.name;
+	console.log(position);
+	cityInputElement = position.data.name;
 	let cityTitle = document.querySelector("#city-title");
-	cityTitle.innerHTML = `${city}`;
+	cityTitle.innerHTML = `${cityInputElement}`;
 
-	hiCelciusTemp = position.data.main.temp_max;
-	loCelciusTemp = position.data.main.temp_min;
-	let loTemp = Math.round(loCelciusTemp);
-	let hiTemp = Math.round(hiCelciusTemp);
+	hicelsiusTemp = position.data.main.temp_max;
+	locelsiusTemp = position.data.main.temp_min;
+	let loTemp = Math.round(locelsiusTemp);
+	let hiTemp = Math.round(hicelsiusTemp);
 	let todayTemps = document.querySelector("#today-temps");
 	todayTemps.innerHTML = `${loTemp}/${hiTemp}`;
 
@@ -51,7 +52,12 @@ function showTemp(position) {
 
 	let wind = document.querySelector("#wind");
 	let windSpeed = Math.round(position.data.wind.speed);
-	wind.innerHTML = `${windSpeed}`;
+
+	if (units == "metric") {
+		wind.innerHTML = `${windSpeed * 3.6}km/h`;
+	} else if (units == "imperial") {
+		wind.innerHTML = `${windSpeed}mph`;
+	}
 
 	let humidity = document.querySelector("#humidity");
 	let humidityValue = position.data.main.humidity;
@@ -86,29 +92,24 @@ function feedbackPostion(location) {
 
 function updateFarenheit(event) {
 	event.preventDefault();
-	let todayTemps = document.querySelector("#today-temps");
-	todayTemps.innerHTML = `${Math.round(loCelciusTemp * 1.8 + 32)}/${Math.round(
-		hiCelciusTemp * 1.8 + 32
-	)}`;
-	celciusLink.classList.remove("inactive");
+	celsiusLink.classList.remove("inactive");
 	farenheitLink.classList.add("inactive");
+	units = "imperial";
+	retrieveWeather(cityInputElement);
 }
 
-function updateCelcius(event) {
+function updateCelsius(event) {
 	event.preventDefault();
-	let todayTemps = document.querySelector("#today-temps");
-	todayTemps.innerHTML = `${Math.round(loCelciusTemp)}/${Math.round(
-		hiCelciusTemp
-	)}`;
-	celciusLink.classList.add("inactive");
+	celsiusLink.classList.add("inactive");
 	farenheitLink.classList.remove("inactive");
+	units = "metric";
+	retrieveWeather(cityInputElement);
 }
 
 function retrieveCoordinates(event) {
 	let lat = event.lat;
 	let lon = event.lon;
-	let apiKey = "a43564c91a6c605aeb564c9ed02e3858";
-	let units = "metric";
+
 	let positionUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=${units}&exclude=hourly,minutely&appid=${apiKey}`;
 
 	axios.get(positionUrl).then(displayForecast);
@@ -121,7 +122,6 @@ function formatDay(timestamp) {
 }
 
 function displayForecast(event) {
-	console.log(event);
 	let forecast = event.data.daily;
 	let forecastElement = document.querySelector(".forecast");
 	let forecastHTML = `<div class="row">`;
@@ -157,12 +157,15 @@ searchCityForm.addEventListener("click", handleSubmit);
 let currentLocationButton = document.querySelector(".current-location-button");
 currentLocationButton.addEventListener("click", retrievePosition);
 
+let apiKey = "a43564c91a6c605aeb564c9ed02e3858";
+let units = "metric";
+let cityInputElement = "Kyoto";
 let farenheitLink = document.querySelector(".farenheit-link");
 farenheitLink.addEventListener("click", updateFarenheit);
-let celciusLink = document.querySelector(".celcius-link");
-celciusLink.addEventListener("click", updateCelcius);
+let celsiusLink = document.querySelector(".celsius-link");
+celsiusLink.addEventListener("click", updateCelsius);
 
-let loCelciusTemp = null;
-let hiCelciusTemp = null;
+let loCelsiusTemp = null;
+let hiCelsiusTemp = null;
 
 retrieveWeather("Kyoto");
